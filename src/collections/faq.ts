@@ -1,46 +1,24 @@
-import { CollectionConfig } from 'payload/types';
+import type { CollectionConfig } from 'payload';
 
 const FAQ: CollectionConfig = {
   slug: 'faq',
-  admin: {
-    useAsTitle: 'question',
-  },
-  access: {
-    read: () => true,
-  },
+  admin: { useAsTitle: 'question' },
+  access: { read: () => true },
   fields: [
-    {
-      name: 'question',
-      type: 'text',
-      required: true,
-    },
-    {
-      name: 'answer',
-      type: 'richText',
-      required: true,
-    },
+    { name: 'question', type: 'text', required: true },
+    { name: 'answer', type: 'richText', required: true },
     {
       name: 'cluster',
-      label: 'Audience cluster (Betriebe, Versicherte, Rentner)',
       type: 'select',
+      required: true,
       options: [
         { label: 'Betriebe', value: 'Betriebe' },
         { label: 'Versicherte', value: 'Versicherte' },
         { label: 'Rentner', value: 'Rentner' },
       ],
-      required: true,
     },
-    {
-      name: 'order',
-      label: 'Display order within cluster',
-      type: 'number',
-      defaultValue: 0,
-    },
-    {
-      name: 'published',
-      type: 'checkbox',
-      defaultValue: true,
-    },
+    { name: 'order', type: 'number', defaultValue: 0 },
+    { name: 'published', type: 'checkbox', defaultValue: true },
   ],
 };
 

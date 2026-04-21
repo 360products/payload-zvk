@@ -1,49 +1,50 @@
-# Payload CMS · ZVK Steinmetz
+# ZVK Steinmetz · Payload CMS
 
-Headless CMS backend für die ZVK Steinmetz Website.
+Headless CMS for the ZVK Steinmetz website — Payload 3 + Next.js 15 + MongoDB.
 
 ## Collections
 
-- **Settings** — Global config (Kontakt, Adresse, Logo)
-- **Pages** — Statische Seiten (Startseite, Über uns, etc.)
+- **Users** — Admin-Zugänge
+- **Settings** — Global config (Kontakt, Adresse)
+- **Pages** — Statische Seiten
 - **News** — News & Aktuelles
 - **Team** — Team-Profile
-- **Partners** — Partner-Organisationen (BBW, BIV, IG BAU, etc.)
-- **FAQ** — Häufig gestellte Fragen
+- **Partners** — Partnerorganisationen
+- **FAQ** — Häufige Fragen
 
-## Setup
+## Lokal laufen lassen
 
 ```bash
 npm install
 cp .env.example .env.local
-# Passe DATABASE_URI und PAYLOAD_SECRET an
+# DATABASE_URI + PAYLOAD_SECRET setzen
 npm run dev
 ```
 
-Admin-UI läuft auf `http://localhost:3000/admin`
-
-## API Endpoints
-
-- `GET /api/pages` — Alle Seiten
-- `GET /api/news` — Alle News
-- `GET /api/team` — Team-Members
-- `GET /api/partners` — Partner
-- `GET /api/faq` — FAQs
-- `GET /api/settings` — Global settings
+Admin-UI: http://localhost:3000/admin
 
 ## Deployment auf Vercel
 
 1. Push zu GitHub
-2. Vercel verbinden (Auto-Deploy)
-3. Environment Variables in Vercel setzen:
-   - `DATABASE_URI` (MongoDB Atlas URI)
-   - `PAYLOAD_SECRET`
-   - `CORS_ORIGINS`
+2. Vercel: „Import Project" → Repo auswählen
+3. Environment Variables:
+   - `DATABASE_URI` — MongoDB Atlas Connection String
+   - `PAYLOAD_SECRET` — Random string (mind. 32 Zeichen)
+   - `CORS_ORIGINS` — `https://zvk-prototyp.netlify.app` (Frontend-URL)
+4. Deploy
 
-## Database
+## API
 
-Verwendet MongoDB (Atlas kostenlos auf atlas.mongodb.com).
+REST-Endpoints unter `/api/<collection>`:
+- `GET /api/pages`
+- `GET /api/news`
+- `GET /api/team`
+- `GET /api/partners`
+- `GET /api/faq`
+- `GET /api/settings`
 
-Anleitung:
-1. Kostenloses Cluster auf MongoDB Atlas erstellen
-2. Connection String kopieren → `DATABASE_URI` in .env
+GraphQL unter `/api/graphql`.
+
+## Beim ersten Start
+
+Nach dem ersten Deploy: auf `/admin` gehen → Admin-User anlegen (Email + Passwort).
