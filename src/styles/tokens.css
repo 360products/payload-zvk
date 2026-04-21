@@ -1,0 +1,322 @@
+/* ====================================================================
+   ZVK Steinmetz — Design Tokens
+   Farben, Typo, Spacing direkt aus dem Brandguide (V1 + V2)
+   ==================================================================== */
+
+:root {
+  /* Brand Farben — exakt nach Brandguide */
+  --zvk-sandstein:      #BCAC93;   /* Akzentfarbe */
+  --zvk-naturstein:     #B89868;   /* Logo-Farbe warm */
+  --zvk-steingrau:      #838582;   /* Logo-Farbe neutral */
+  --zvk-schiefergrau:   #49515C;   /* Basis dunkel */
+  --zvk-tiefschwarz:    #000000;
+  --zvk-weiss:          #FFFFFF;
+
+  /* Abgeleitete Töne für UI */
+  --zvk-sand-50:        #F6F2EB;
+  --zvk-sand-100:       #EDE6D9;
+  --zvk-sand-200:       #DDD0BB;
+  --zvk-sand-300:       #CDBDA2;
+  --zvk-sand-600:       #9A8B73;
+
+  --zvk-schiefer-800:   #30363F;
+  --zvk-schiefer-900:   #1C2026;
+
+  --zvk-line:           #E6E1D6;
+  --zvk-line-strong:    #CFC7B5;
+  --zvk-bg:             #FAF8F3;
+  --zvk-bg-elev:        #FFFFFF;
+
+  /* Status / semantisch */
+  --zvk-success:        #4A6B3C;
+  --zvk-warn:           #B8782A;
+
+  /* Typography — Panton-Alternative: Manrope (humanistisch, freundlich, gedrungen)
+     Display-Serif: Source Serif 4 (ruhig, gravitätisch, passt zu "Stein") */
+  --zvk-font-sans:      'Manrope', 'Panton', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --zvk-font-display:   'Manrope', 'Panton', system-ui, sans-serif;
+  --zvk-font-serif:     'Source Serif 4', 'Source Serif Pro', Georgia, 'Times New Roman', serif;
+  --zvk-font-mono:      ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Scale */
+  --zvk-text-xs:   12px;
+  --zvk-text-sm:   13.5px;
+  --zvk-text-base: 15px;
+  --zvk-text-md:   17px;
+  --zvk-text-lg:   20px;
+  --zvk-text-xl:   26px;
+  --zvk-text-2xl:  34px;
+  --zvk-text-3xl:  48px;
+  --zvk-text-4xl:  64px;
+  --zvk-text-5xl:  84px;
+
+  /* Spacing */
+  --zvk-space-1:   4px;
+  --zvk-space-2:   8px;
+  --zvk-space-3:   12px;
+  --zvk-space-4:   16px;
+  --zvk-space-5:   24px;
+  --zvk-space-6:   32px;
+  --zvk-space-7:   48px;
+  --zvk-space-8:   64px;
+  --zvk-space-9:   96px;
+  --zvk-space-10:  128px;
+
+  /* Radien — eher zurückhaltend, „Stein" */
+  --zvk-radius-sm:  2px;
+  --zvk-radius:     4px;
+  --zvk-radius-lg:  8px;
+  --zvk-radius-xl:  16px;
+
+  /* Shadows */
+  --zvk-shadow-sm:  0 1px 2px rgba(40,32,20,.06);
+  --zvk-shadow:     0 4px 20px rgba(40,32,20,.08);
+  --zvk-shadow-lg:  0 20px 60px rgba(40,32,20,.14);
+
+  /* Layout */
+  --zvk-container:  1240px;
+  --zvk-gutter:     clamp(20px, 4vw, 56px);
+  --zvk-nav-h:      72px;
+}
+
+/* ============ Resets ============ */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--zvk-font-sans);
+  font-size: var(--zvk-text-base);
+  line-height: 1.55;
+  color: var(--zvk-schiefergrau);
+  background: var(--zvk-bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img { max-width: 100%; display: block; }
+button { font: inherit; cursor: pointer; border: 0; background: 0; color: inherit; }
+a { color: inherit; text-decoration: none; }
+
+/* ============ Display Typo ============ */
+/* Displays nutzen die Serif (Source Serif 4) — gibt „Stein"-Gravitas.
+   Sans bleibt Manrope für UI, Body, Kleintexte. */
+.zvk-display {
+  font-family: var(--zvk-font-serif);
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
+  color: var(--zvk-tiefschwarz);
+  font-feature-settings: "ss01" on;
+}
+.zvk-display-xl { font-size: clamp(48px, 8vw, 104px); font-weight: 300; }
+.zvk-display-lg { font-size: clamp(36px, 5.6vw, 72px); font-weight: 300; }
+.zvk-display-md { font-size: clamp(28px, 3.8vw, 52px); font-weight: 400; line-height: 1.08; letter-spacing: -0.02em; }
+.zvk-display-sm { font-size: clamp(22px, 2.6vw, 36px); font-weight: 400; line-height: 1.15; letter-spacing: -0.015em; }
+.zvk-sans-display {
+  font-family: var(--zvk-font-sans);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--zvk-tiefschwarz);
+}
+
+.zvk-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--zvk-sand-600);
+  font-weight: 600;
+}
+.zvk-kicker::before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 1px;
+  background: currentColor;
+  opacity: .6;
+}
+.zvk-kicker--plain::before { display: none; }
+
+.zvk-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--zvk-schiefergrau);
+}
+
+.zvk-lede {
+  font-size: clamp(17px, 1.4vw, 19px);
+  line-height: 1.55;
+  color: var(--zvk-schiefer-800);
+  max-width: 62ch;
+}
+
+.zvk-body  { font-size: var(--zvk-text-base); line-height: 1.6; color: var(--zvk-schiefergrau); }
+.zvk-small { font-size: var(--zvk-text-sm); color: var(--zvk-steingrau); }
+
+/* ============ Utility ============ */
+.zvk-container {
+  max-width: var(--zvk-container);
+  margin: 0 auto;
+  padding-left: var(--zvk-gutter);
+  padding-right: var(--zvk-gutter);
+}
+
+.zvk-section { padding: clamp(56px, 9vw, 112px) 0; }
+.zvk-section-sm { padding: clamp(40px, 6vw, 72px) 0; }
+
+.zvk-rule {
+  height: 1px;
+  background: var(--zvk-line);
+  border: 0;
+  margin: 0;
+}
+
+/* ============ Buttons ============ */
+.zvk-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  border-radius: var(--zvk-radius);
+  transition: transform .15s ease, background .15s ease, color .15s ease, border-color .15s ease;
+  white-space: nowrap;
+}
+.zvk-btn:active { transform: translateY(1px); }
+.zvk-btn--primary {
+  background: var(--zvk-schiefergrau);
+  color: var(--zvk-weiss);
+}
+.zvk-btn--primary:hover { background: var(--zvk-schiefer-800); }
+.zvk-btn--secondary {
+  background: transparent;
+  color: var(--zvk-schiefergrau);
+  border: 1px solid var(--zvk-schiefergrau);
+}
+.zvk-btn--secondary:hover { background: var(--zvk-schiefergrau); color: white; }
+.zvk-btn--ghost {
+  background: transparent;
+  color: var(--zvk-schiefergrau);
+  padding: 10px 2px;
+}
+.zvk-btn--ghost:hover { color: var(--zvk-tiefschwarz); }
+.zvk-btn--accent {
+  background: var(--zvk-naturstein);
+  color: var(--zvk-weiss);
+}
+.zvk-btn--accent:hover { background: #A2834F; }
+
+.zvk-btn .arrow {
+  transition: transform .2s ease;
+  font-family: var(--zvk-font-mono);
+}
+.zvk-btn:hover .arrow { transform: translateX(3px); }
+
+/* ============ Tag / Badge ============ */
+.zvk-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  background: var(--zvk-sand-100);
+  color: var(--zvk-sand-600);
+}
+.zvk-tag--dark {
+  background: var(--zvk-schiefergrau);
+  color: var(--zvk-weiss);
+}
+.zvk-tag--sand {
+  background: var(--zvk-sandstein);
+  color: var(--zvk-tiefschwarz);
+}
+
+/* ============ Card ============ */
+.zvk-card {
+  background: var(--zvk-bg-elev);
+  border: 1px solid var(--zvk-line);
+  border-radius: var(--zvk-radius-lg);
+  transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+}
+.zvk-card:hover {
+  border-color: var(--zvk-sand-300);
+}
+.zvk-card--link:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--zvk-shadow);
+}
+
+/* ============ Placeholder (Steinplatten-Optik) ============ */
+.zvk-ph {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.15) 0%, rgba(0,0,0,.08) 100%),
+    repeating-linear-gradient(
+      45deg,
+      var(--zvk-sandstein) 0 6px,
+      var(--zvk-sand-300) 6px 12px
+    );
+  position: relative;
+  overflow: hidden;
+  color: rgba(40,32,20,.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.zvk-ph::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 30% 20%, rgba(255,255,255,.35), transparent 60%);
+  pointer-events: none;
+}
+.zvk-ph--schiefer {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.05) 0%, rgba(0,0,0,.25) 100%),
+    repeating-linear-gradient(45deg, var(--zvk-schiefergrau) 0 8px, var(--zvk-schiefer-800) 8px 16px);
+  color: rgba(255,255,255,.6);
+}
+.zvk-ph--warm {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.18) 0%, rgba(0,0,0,.12) 100%),
+    repeating-linear-gradient(45deg, var(--zvk-naturstein) 0 8px, #A2834F 8px 16px);
+  color: rgba(255,255,255,.7);
+}
+
+/* ============ Grids ============ */
+.zvk-grid { display: grid; gap: var(--zvk-space-5); }
+.zvk-grid-2 { grid-template-columns: repeat(2, 1fr); }
+.zvk-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.zvk-grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 960px) {
+  .zvk-grid-4, .zvk-grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .zvk-grid-4, .zvk-grid-3, .zvk-grid-2 { grid-template-columns: 1fr; }
+}
+
+/* ============ Animation ============ */
+@keyframes zvk-fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.zvk-fade-in { animation: zvk-fade-up .45s ease both; }
+
+/* ============ Focus ============ */
+:focus-visible {
+  outline: 2px solid var(--zvk-naturstein);
+  outline-offset: 2px;
+}
