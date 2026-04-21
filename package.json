@@ -1,0 +1,26 @@
+{
+  "name": "payload-zvk",
+  "description": "ZVK Steinmetz CMS Backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "payload dev",
+    "build": "payload build",
+    "start": "node dist/server.js",
+    "payload": "payload"
+  },
+  "dependencies": {
+    "payload": "latest",
+    "@payloadcms/db-mongodb": "latest",
+    "express": "latest",
+    "dotenv": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "typescript": "latest"
+  }
+}
