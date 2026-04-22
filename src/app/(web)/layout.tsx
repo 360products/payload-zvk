@@ -3,7 +3,7 @@ import '@/styles/shell.css';
 import '@/styles/home.css';
 import '@/styles/pages.css';
 
-import Nav from '@/components/Nav';
+import NavWrapper from '@/components/NavWrapper';
 import Footer from '@/components/Footer';
 
 export const metadata = {
@@ -23,7 +23,7 @@ export default function WebLayout({ children }: { children: React.ReactNode }) {
         />
       </head>
       <body style={{ margin: 0, background: 'var(--zvk-bg)' }}>
-        <Nav />
+        <NavWrapper />
         <div style={{ minHeight: '60vh' }}>{children}</div>
         <Footer />
       </body>

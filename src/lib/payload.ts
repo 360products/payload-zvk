@@ -15,3 +15,21 @@ export async function findAll(collection: string, opts: any = {}) {
     return [];
   }
 }
+
+export async function getNavPages(): Promise<{ title: string; navLabel: string; slug: string }[]> {
+  try {
+    const payload = await getPayloadClient();
+    const res = await payload.find({
+      collection: 'pages' as any,
+      where: { showInNav: { equals: true }, published: { equals: true } },
+      limit: 20,
+    });
+    return (res.docs || []).map((p: any) => ({
+      title: p.title,
+      navLabel: p.navLabel || p.title,
+      slug: p.slug,
+    }));
+  } catch {
+    return [];
+  }
+}

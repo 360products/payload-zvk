@@ -35,7 +35,9 @@ const ZIELGRUPPEN = [
   { label: 'Für Rentner', to: '/fuer-rentner' },
 ];
 
-export default function Nav() {
+interface CmsPage { title: string; navLabel: string; slug: string }
+
+export default function Nav({ cmsPages = [] }: { cmsPages?: CmsPage[] }) {
   const route = usePathname() || '/';
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -121,6 +123,26 @@ export default function Nav() {
                 )}
               </div>
             ))}
+            {cmsPages.length > 0 && (
+              <div
+                className="zvk-nav__item"
+                onMouseEnter={() => setOpenMenu('__cms__')}
+                onMouseLeave={() => setOpenMenu(null)}
+              >
+                <span className={'zvk-nav__link' + (openMenu === '__cms__' ? ' is-active' : '')}>
+                  Weitere Seiten <span className="zvk-nav__chev" aria-hidden>›</span>
+                </span>
+                {openMenu === '__cms__' && (
+                  <div className="zvk-nav__submenu">
+                    {cmsPages.map((p) => (
+                      <Link key={p.slug} href={`/${p.slug}`} className="zvk-nav__sublink">
+                        {p.navLabel}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </nav>
           <div className="zvk-nav__cta">
             <Link href="/service/kontakt" className="zvk-btn zvk-btn--bar">
@@ -145,6 +167,14 @@ export default function Nav() {
               ))}
             </div>
           ))}
+          {cmsPages.length > 0 && (
+            <>
+              <div className="zvk-nav__mobile-section">Weitere Seiten</div>
+              {cmsPages.map((p) => (
+                <Link key={p.slug} href={`/${p.slug}`} className="zvk-nav__mobile-top">{p.navLabel}</Link>
+              ))}
+            </>
+          )}
           <Link href="/service/kontakt" className="zvk-btn zvk-btn--primary" style={{ marginTop: 16 }}>
             Kontakt aufnehmen
           </Link>
