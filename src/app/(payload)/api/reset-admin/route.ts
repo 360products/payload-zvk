@@ -4,9 +4,20 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   const secret = request.nextUrl.searchParams.get('secret');
+  const validSecrets = [
+    process.env.ADMIN_RESET_TOKEN,
+    process.env.PAYLOAD_SECRET,
+  ].filter(Boolean);
 
-  if (!secret || secret !== process.env.PAYLOAD_SECRET) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  if (!secret || !validSecrets.includes(secret)) {
+    return NextResponse.json({
+      error: 'Unauthorized',
+      hint: 'Set ADMIN_RESET_TOKEN in Vercel env vars, then pass it as ?secret=...',
+      tokenConfigured: {
+        ADMIN_RESET_TOKEN: Boolean(process.env.ADMIN_RESET_TOKEN),
+        PAYLOAD_SECRET: Boolean(process.env.PAYLOAD_SECRET),
+      },
+    }, { status: 401 });
   }
 
   try {
