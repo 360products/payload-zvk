@@ -2,7 +2,11 @@ import type { Block } from 'payload';
 
 export const TextBlock: Block = {
   slug: 'text',
-  labels: { singular: 'Text', plural: 'Texte' },
+  labels: { singular: 'Textabschnitt', plural: 'Textabschnitte' },
+  admin: {
+    description: 'Freitext-Block mit Rich-Text-Editor, optionalem Kicker und Überschrift. Schmal oder breit.',
+    components: { Label: '@/components/admin/blocks/TextLabel' },
+  },
   fields: [
     { name: 'kicker', label: 'Kicker (optional)', type: 'text' },
     { name: 'title', label: 'Überschrift', type: 'text' },

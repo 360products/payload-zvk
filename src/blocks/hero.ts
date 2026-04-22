@@ -2,7 +2,11 @@ import type { Block } from 'payload';
 
 export const HeroBlock: Block = {
   slug: 'hero',
-  labels: { singular: 'Hero', plural: 'Heroes' },
+  labels: { singular: 'Hero-Banner', plural: 'Hero-Banner' },
+  admin: {
+    description: 'Vollbreite-Banner mit Kicker, großem Titel, Einleitungstext und Buttons. Ideal als Seitenanfang.',
+    components: { Label: '@/components/admin/blocks/HeroLabel' },
+  },
   fields: [
     { name: 'kicker', label: 'Kicker (kleiner Text oben)', type: 'text' },
     { name: 'title', label: 'Titel', type: 'text', required: true },

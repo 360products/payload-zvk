@@ -1,0 +1,90 @@
+/* ====================================================================
+   ZVK Steinmetz — Payload Admin Branding Override
+   Replaces Payload's blue accent with ZVK naturstein/sandstein palette
+   ==================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
+
+/* ---- Font override ---- */
+html, body, input, textarea, select, button {
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif !important;
+}
+
+/* ---- ZVK accent color: naturstein (#B89868) replaces Payload blue ----
+   Payload 3 stores these as bare R,G,B triplets so rgba() composition works */
+:root,
+[data-theme="dark"],
+[data-theme="light"] {
+  /* naturstein ramp — from near-white warm to deep bronze */
+  --color-blue-50:   252, 250, 246;
+  --color-blue-100:  244, 239, 229;
+  --color-blue-200:  228, 219, 200;
+  --color-blue-300:  210, 196, 170;
+  --color-blue-400:  196, 175, 140;
+  --color-blue-500:  184, 152, 104;   /* #B89868 naturstein — main accent */
+  --color-blue-600:  162, 131,  79;
+  --color-blue-700:  134, 104,  56;
+  --color-blue-800:  104,  79,  38;
+  --color-blue-900:   72,  52,  18;
+  --color-blue-1000:  40,  25,   4;
+}
+
+/* ---- Logo / branding strip accent ---- */
+[class*="nav__header"],
+[class*="Nav__header"],
+[class*="nav-header"] {
+  border-bottom-color: rgba(184, 152, 104, 0.25) !important;
+}
+
+/* ---- Primary buttons: schiefergrau fill ---- */
+[class*="btn--style-primary"],
+button[class*="primaryButton"],
+a[class*="primaryButton"] {
+  background-color: #49515C !important;
+  border-color: #49515C !important;
+}
+[class*="btn--style-primary"]:hover,
+button[class*="primaryButton"]:hover {
+  background-color: #30363F !important;
+  border-color: #30363F !important;
+}
+
+/* ---- Focus ring: naturstein ---- */
+:focus-visible {
+  outline-color: #B89868 !important;
+}
+
+/* ---- Sidebar active indicator ---- */
+[class*="nav-group__toggle--active"],
+[class*="NavGroup__toggle--active"],
+[class*="nav__link--active"],
+a[aria-current="page"] {
+  color: #B89868 !important;
+  border-left-color: #B89868 !important;
+}
+
+/* ---- Checkbox / toggle active ---- */
+[class*="checkbox__input:checked"],
+input[type="checkbox"]:checked + [class*="checkbox"],
+[class*="toggle--checked"] {
+  background-color: #B89868 !important;
+  border-color: #B89868 !important;
+}
+
+/* ---- Payload dark theme background depth using ZVK schiefer palette ---- */
+[data-theme="dark"] {
+  --color-base-0:    22,  32,  38;   /* --zvk-schiefer-900 ish */
+  --color-base-50:   28,  32,  38;
+  --color-base-100:  35,  40,  48;
+  --color-base-150:  42,  48,  57;
+  --color-base-200:  48,  54,  63;   /* --zvk-schiefer-800 */
+  --color-base-250:  57,  63,  73;
+  --color-base-300:  66,  73,  84;
+  --color-base-400:  82,  90, 102;
+  --color-base-500: 110, 116, 128;
+  --color-base-600: 138, 144, 154;
+  --color-base-700: 165, 170, 178;
+  --color-base-800: 193, 197, 203;
+  --color-base-900: 220, 222, 226;
+  --color-base-1000:242, 243, 245;
+}

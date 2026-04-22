@@ -3,6 +3,10 @@ import type { Block } from 'payload';
 export const CardsBlock: Block = {
   slug: 'cards',
   labels: { singular: 'Karten-Raster', plural: 'Karten-Raster' },
+  admin: {
+    description: 'Raster aus Infoboxen — 2, 3 oder 4 Spalten. Karten können optional verlinkt werden.',
+    components: { Label: '@/components/admin/blocks/CardsLabel' },
+  },
   fields: [
     { name: 'kicker', label: 'Kicker (optional)', type: 'text' },
     { name: 'title', label: 'Überschrift', type: 'text' },

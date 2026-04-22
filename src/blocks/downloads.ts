@@ -3,6 +3,10 @@ import type { Block } from 'payload';
 export const DownloadsBlock: Block = {
   slug: 'downloads',
   labels: { singular: 'Download-Liste', plural: 'Download-Listen' },
+  admin: {
+    description: 'Liste herunterladbarer Dateien mit Dateiname, Typ-Info und direktem Download-Link.',
+    components: { Label: '@/components/admin/blocks/DownloadsLabel' },
+  },
   fields: [
     { name: 'kicker', label: 'Kicker (optional)', type: 'text' },
     { name: 'title', label: 'Überschrift', type: 'text' },
