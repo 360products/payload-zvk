@@ -1,5 +1,6 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
+import { de } from '@payloadcms/translations/languages/de';
 import path from 'path';
 import { buildConfig } from 'payload';
 import { fileURLToPath } from 'url';
@@ -30,6 +31,10 @@ const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
 export default buildConfig({
+  i18n: {
+    fallbackLanguage: 'de',
+    supportedLanguages: { de },
+  },
   admin: {
     user: Users.slug,
     importMap: {
