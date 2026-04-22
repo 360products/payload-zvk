@@ -4,7 +4,6 @@ export const ContactBlock: Block = {
   slug: 'contact',
   labels: { singular: 'Kontaktstreifen', plural: 'Kontaktstreifen' },
   admin: {
-    description: 'Ansprechpartner-Streifen mit Name, Funktion, Telefon und E-Mail.',
     components: { Label: '@/components/admin/blocks/ContactLabel' },
   },
   fields: [

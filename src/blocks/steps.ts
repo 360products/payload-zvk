@@ -4,7 +4,6 @@ export const StepsBlock: Block = {
   slug: 'steps',
   labels: { singular: 'Schritte', plural: 'Schritte' },
   admin: {
-    description: 'Nummerierte Schritt-für-Schritt-Liste — ideal für Prozesse, Anleitungen und Abläufe.',
     components: { Label: '@/components/admin/blocks/StepsLabel' },
   },
   fields: [

@@ -4,7 +4,6 @@ export const TextBlock: Block = {
   slug: 'text',
   labels: { singular: 'Textabschnitt', plural: 'Textabschnitte' },
   admin: {
-    description: 'Freitext-Block mit Rich-Text-Editor, optionalem Kicker und Überschrift. Schmal oder breit.',
     components: { Label: '@/components/admin/blocks/TextLabel' },
   },
   fields: [

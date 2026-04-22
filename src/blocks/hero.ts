@@ -4,7 +4,6 @@ export const HeroBlock: Block = {
   slug: 'hero',
   labels: { singular: 'Hero-Banner', plural: 'Hero-Banner' },
   admin: {
-    description: 'Vollbreite-Banner mit Kicker, großem Titel, Einleitungstext und Buttons. Ideal als Seitenanfang.',
     components: { Label: '@/components/admin/blocks/HeroLabel' },
   },
   fields: [
