@@ -1,8 +1,17 @@
 import Link from 'next/link';
 import { Crumbs, ContactStrip } from '@/components/PageParts';
 import ZukunftsteinCalc from '@/components/ZukunftsteinCalc';
+import { getGlobal } from '@/lib/globals';
 
-export default function ZukunftsteinPage() {
+export default async function ZukunftsteinPage() {
+  const g = await getGlobal('zukunftstein-page');
+
+  const hero = g?.hero ?? {};
+  const quote = g?.quote ?? {};
+  const steps: any[] = g?.steps ?? [];
+  const betriebeBullets: any[] = g?.betriebeBullets ?? [];
+  const contact = g?.contact ?? {};
+
   return (
     <main className="zvk-page">
       <Crumbs items={[{ label: 'Start', href: '/' }, { label: 'Vorsorge', href: '/vorsorge/pflichtbeihilfe' }, { label: 'ZukunftStein' }]} />
@@ -10,13 +19,13 @@ export default function ZukunftsteinPage() {
       <section className="zs-hero">
         <div className="zvk-container zs-hero__grid">
           <div>
-            <span className="zvk-kicker">Freiwillig · Zusatzrente</span>
-            <h1 className="zvk-display zvk-display-xl" style={{ marginTop: 16 }}>ZukunftStein.<br />Freiwillig mehr vorsorgen.</h1>
-            <p className="zvk-lede" style={{ marginTop: 18 }}>
-              Mit ZukunftStein wandeln Sie Bruttolohn in zusätzliche Rente um — ohne Vertriebskosten,
-              ohne Provisionsanteil. Für Angestellte, die mehr wollen. Und für Betriebe, die ein echtes
-              Argument suchen.
-            </p>
+            <span className="zvk-kicker">{hero.kicker ?? 'Freiwillig · Zusatzrente'}</span>
+            <h1 className="zvk-display zvk-display-xl" style={{ marginTop: 16 }}>
+              {(hero.title ?? 'ZukunftStein.\nFreiwillig mehr vorsorgen.').split('\n').map((line: string, i: number) => (
+                <span key={i}>{line}{i === 0 && <br />}</span>
+              ))}
+            </h1>
+            <p className="zvk-lede" style={{ marginTop: 18 }}>{hero.lede ?? ''}</p>
           </div>
           <div className="zvk-ph zvk-ph--warm zs-hero__img">Bildplatzhalter</div>
         </div>
@@ -39,8 +48,7 @@ export default function ZukunftsteinPage() {
             <span className="zvk-kicker">Für Arbeitnehmer</span>
             <h2 className="zvk-stitle" style={{ marginTop: 12 }}>So sprechen Sie Ihren Chef an.</h2>
             <p style={{ marginTop: 18, color: 'var(--zvk-schiefer-800)' }}>
-              ZukunftStein muss vom Betrieb angeboten werden. Das ist kein Aufwand für Ihren Arbeitgeber —
-              und kein Kostenpunkt. Hier ein kurzer Leitfaden für das Gespräch.
+              ZukunftStein muss vom Betrieb angeboten werden. Das ist kein Aufwand für Ihren Arbeitgeber — und kein Kostenpunkt.
             </p>
             <div style={{ marginTop: 24, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               <a href="#" className="zvk-btn zvk-btn--primary">Leitfaden als PDF ↓</a>
@@ -50,14 +58,13 @@ export default function ZukunftsteinPage() {
           <div className="quote">
             <div style={{ fontSize: 48, color: 'var(--zvk-sandstein)', fontFamily: 'Georgia, serif', lineHeight: 1 }}>„</div>
             <p style={{ fontSize: 20, color: 'var(--zvk-tiefschwarz)', fontWeight: 400, lineHeight: 1.4, letterSpacing: '-0.005em' }}>
-              Ich habe meinen Chef einfach gefragt, ob er das anbieten kann. Es war weniger Aufwand als
-              gedacht — und ich habe jetzt monatlich 80 € mehr fürs Alter.
+              {quote.text ?? ''}
             </p>
             <div style={{ marginTop: 20, display: 'flex', alignItems: 'center', gap: 12 }}>
               <div className="zvk-ph zvk-ph--warm" style={{ width: 40, height: 40, borderRadius: 4 }}>—</div>
               <div>
-                <div style={{ fontSize: 14, fontWeight: 500, color: 'var(--zvk-tiefschwarz)' }}>Thomas K.</div>
-                <div style={{ fontSize: 12, color: 'var(--zvk-steingrau)' }}>Steinmetzgeselle · 34 Jahre</div>
+                <div style={{ fontSize: 14, fontWeight: 500, color: 'var(--zvk-tiefschwarz)' }}>{quote.author ?? 'Thomas K.'}</div>
+                <div style={{ fontSize: 12, color: 'var(--zvk-steingrau)' }}>{quote.role ?? 'Steinmetzgeselle · 34 Jahre'}</div>
               </div>
             </div>
           </div>
@@ -73,10 +80,7 @@ export default function ZukunftsteinPage() {
             </h2>
           </div>
           <ul className="bullets bullets--light" style={{ fontSize: 16 }}>
-            <li>Minimaler Verwaltungsaufwand — über das bekannte Meldeportal</li>
-            <li>Attraktivitätsmerkmal im Wettbewerb um Fachkräfte</li>
-            <li>Keine Kosten für den Betrieb, keine Versicherungspflicht</li>
-            <li>Auf Wunsch mit AG-Zuschuss kombinierbar</li>
+            {betriebeBullets.map((b: any, i: number) => <li key={i}>{b.text}</li>)}
           </ul>
         </div>
       </section>
@@ -86,11 +90,7 @@ export default function ZukunftsteinPage() {
           <span className="zvk-kicker">So kommen Sie rein</span>
           <h2 className="zvk-stitle" style={{ marginTop: 12, marginBottom: 28 }}>In drei Schritten zum ZukunftStein.</h2>
           <div className="steps">
-            {[
-              { n: '01', t: 'Beratungstermin', d: 'Kostenlose Beratung durch unsere Spezialisten — telefonisch oder beim Betrieb.' },
-              { n: '02', t: 'Abschluss über Betrieb', d: 'Der Arbeitgeber meldet Sie im Meldeportal an. Keine externen Formulare.' },
-              { n: '03', t: 'Zahlung startet', d: 'Der gewählte Betrag wird direkt vom Bruttolohn abgeführt — ab dem Folgemonat.' },
-            ].map((s, i) => (
+            {steps.map((s: any, i: number) => (
               <div className="steps__item" key={i}>
                 <div className="steps__n">{s.n}</div>
                 <div className="steps__t">{s.t}</div>
@@ -106,7 +106,13 @@ export default function ZukunftsteinPage() {
 
       <section className="zvk-section-sm">
         <div className="zvk-container">
-          <ContactStrip group="ZukunftStein" person="Andrea Rockel" role="Beratung & Vertrieb Zusatzvorsorge" tel="0761 · 123 45 · 10" mail="zukunftstein@zvk-steinmetz.de" />
+          <ContactStrip
+            group="ZukunftStein"
+            person={contact.person ?? 'Andrea Rockel'}
+            role={contact.role ?? 'Beratung & Vertrieb Zusatzvorsorge'}
+            tel={contact.tel ?? '0761 · 123 45 · 10'}
+            mail={contact.mail ?? 'zukunftstein@zvk-steinmetz.de'}
+          />
         </div>
       </section>
     </main>

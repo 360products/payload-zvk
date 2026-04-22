@@ -1,10 +1,19 @@
 import { Crumbs, PageHero } from '@/components/PageParts';
+import { getGlobal } from '@/lib/globals';
 
-export default function MeldeportalPage() {
+export default async function MeldeportalPage() {
+  const g = await getGlobal('meldeportal');
+  const hero = g?.hero ?? {};
+  const features: any[] = g?.features ?? [];
+
   return (
     <main className="zvk-page">
       <Crumbs items={[{ label: 'Start', href: '/' }, { label: 'Service', href: '/service' }, { label: 'Meldeportal' }]} />
-      <PageHero kicker="Für Betriebe" title="Meldeportal für Betriebe." lede="Lohnsummen und Mitarbeitermeldungen zentral, jederzeit, mobilfähig. Ab 2026 mit vereinfachtem Login und CSV-Upload." />
+      <PageHero
+        kicker={hero.kicker ?? 'Für Betriebe'}
+        title={hero.title ?? 'Meldeportal für Betriebe.'}
+        lede={hero.lede ?? ''}
+      />
       <section className="zvk-section-sm">
         <div className="zvk-container" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center' }}>
           <div>
@@ -25,11 +34,7 @@ export default function MeldeportalPage() {
           <div>
             <span className="zvk-kicker">Das finden Sie im Portal</span>
             <ul className="bullets" style={{ marginTop: 16 }}>
-              <li>Lohnsummen-Meldung (manuell oder CSV)</li>
-              <li>Mitarbeiter anlegen, ändern, ausmelden</li>
-              <li>ZukunftStein für Angestellte aktivieren</li>
-              <li>Rechnungen, Beitragsnachweise, Jahreslisten</li>
-              <li>Mahn- und Zahlungshistorie</li>
+              {features.map((f: any, i: number) => <li key={i}>{f.text}</li>)}
             </ul>
           </div>
         </div>

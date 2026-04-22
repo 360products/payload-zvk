@@ -2,17 +2,26 @@ import Link from 'next/link';
 import { Crumbs, PageHero, ContactStrip } from '@/components/PageParts';
 import MiniFaq from '@/components/MiniFaq';
 import { getFaqsByCluster } from '@/lib/faq-fallback';
+import { getGlobal } from '@/lib/globals';
 
 export default async function VersichertePage() {
-  const faqs = await getFaqsByCluster('Versicherte');
+  const [faqs, g] = await Promise.all([
+    getFaqsByCluster('Versicherte'),
+    getGlobal('versicherte'),
+  ]);
+
+  const hero = g?.hero ?? {};
+  const benefits = g?.benefits ?? {};
+  const lebenssituationen: any[] = g?.lebenssituationen ?? [];
+  const contact = g?.contact ?? {};
 
   return (
     <main className="zvk-page">
       <Crumbs items={[{ label: 'Start', href: '/' }, { label: 'Für Versicherte' }]} />
       <PageHero
-        kicker="Für Angestellte im Steinmetzhandwerk"
-        title="Ihre Rente ist schon auf dem Weg."
-        lede="Sie arbeiten in einem Steinmetzbetrieb? Dann sind Sie über uns bereits zusätzlich versichert — ohne einen einzigen Antrag. Hier erfahren Sie, was Sie haben und wie Sie mit ZukunftStein mehr herausholen."
+        kicker={hero.kicker ?? 'Für Angestellte im Steinmetzhandwerk'}
+        title={hero.title ?? 'Ihre Rente ist schon auf dem Weg.'}
+        lede={hero.lede ?? ''}
       >
         <Link href="/vorsorge/zukunftstein" className="zvk-btn zvk-btn--primary">ZukunftStein prüfen <span className="arrow">→</span></Link>
         <Link href="#renteninfo" className="zvk-btn zvk-btn--secondary">Renteninformation verstehen</Link>
@@ -22,12 +31,11 @@ export default async function VersichertePage() {
         <div className="zvk-container" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center' }}>
           <div>
             <span className="zvk-kicker">Automatisch · Pflichtbeihilfe</span>
-            <h2 className="zvk-stitle" style={{ marginTop: 12 }}>Das bekommen Sie — ohne etwas dafür zu tun.</h2>
+            <h2 className="zvk-stitle" style={{ marginTop: 12 }}>{benefits.title ?? 'Das bekommen Sie — ohne etwas dafür zu tun.'}</h2>
             <ul className="bullets">
-              <li><b>116 € monatlich</b> als Vollrente — nach 360 Beitragsmonaten</li>
-              <li><b>Quartalsweise ausgezahlt</b> ab Renteneintritt, auf Ihr Konto</li>
-              <li><b>Keine Beiträge von Ihnen</b> — der Betrieb zahlt ein</li>
-              <li><b>Bleibt bestehen</b>, auch bei Betriebswechsel innerhalb der Branche</li>
+              {(benefits.bullets ?? []).map((b: any, i: number) => (
+                <li key={i}><b>{b.text?.split(' —')[0]}</b>{b.text?.includes(' —') ? ' —' + b.text.split(' —').slice(1).join(' —') : ''}</li>
+              ))}
             </ul>
             <div style={{ marginTop: 24 }}>
               <Link href="/vorsorge/pflichtbeihilfe" className="zvk-btn zvk-btn--ghost">Wie funktioniert das genau? <span className="arrow">→</span></Link>
@@ -42,12 +50,7 @@ export default async function VersichertePage() {
           <span className="zvk-kicker">Ihre Lebenssituation</span>
           <h2 className="zvk-stitle" style={{ marginTop: 12, marginBottom: 28 }}>Was passiert, wenn sich etwas ändert?</h2>
           <div className="zvk-grid zvk-grid-4">
-            {[
-              { t: 'Jobwechsel', d: 'Beiträge bleiben. Solange der neue Arbeitgeber im Handwerk ist.' },
-              { t: 'Krankheit', d: 'Bei Krankengeld läuft Ihr Anspruch weiter — melden Sie uns den Bezug.' },
-              { t: 'Elternzeit', d: 'Bis zu 3 Jahre anrechenbar. Für jedes Kind separat geprüft.' },
-              { t: 'Umzug / Ausland', d: 'Adressänderung bitte melden. Auszahlung ins EU-Ausland möglich.' },
-            ].map((x, i) => (
+            {lebenssituationen.map((x: any, i: number) => (
               <div className="zvk-card" key={i} style={{ padding: 22, minHeight: 160 }}>
                 <div style={{ fontSize: 16, color: 'var(--zvk-tiefschwarz)', fontWeight: 500, marginBottom: 8 }}>{x.t}</div>
                 <div style={{ fontSize: 14, color: 'var(--zvk-schiefer-800)', lineHeight: 1.55 }}>{x.d}</div>
@@ -84,7 +87,13 @@ export default async function VersichertePage() {
 
       <section className="zvk-section-sm">
         <div className="zvk-container">
-          <ContactStrip group="Versicherte" person="Jonas Weber" role="Beiträge, Anwartschaften" tel="0761 · 123 45 · 30" mail="versicherte@zvk-steinmetz.de" />
+          <ContactStrip
+            group="Versicherte"
+            person={contact.person ?? 'Jonas Weber'}
+            role={contact.role ?? 'Beiträge, Anwartschaften'}
+            tel={contact.tel ?? '0761 · 123 45 · 30'}
+            mail={contact.mail ?? 'versicherte@zvk-steinmetz.de'}
+          />
         </div>
       </section>
 

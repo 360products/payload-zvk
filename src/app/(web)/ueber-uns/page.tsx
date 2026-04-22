@@ -1,5 +1,6 @@
 import { Crumbs, PageHero } from '@/components/PageParts';
 import { findAll } from '@/lib/payload';
+import { getGlobal } from '@/lib/globals';
 
 const FALLBACK_TEAM = [
   ['Andrea Rockel', 'Geschäftsführung', '· 10'],
@@ -13,39 +14,38 @@ const FALLBACK_TEAM = [
 ];
 
 export default async function UeberUnsPage() {
-  const cms = await findAll('team', { sort: 'order' });
+  const [cms, g] = await Promise.all([
+    findAll('team', { sort: 'order' }),
+    getGlobal('ueber-uns'),
+  ]);
+
   const team = cms.length > 0
     ? cms.map((m: any) => [m.name, m.role, m.phone || ''])
     : FALLBACK_TEAM;
+
+  const hero = g?.hero ?? {};
+  const history = g?.history ?? {};
+  const timeline: any[] = g?.timeline ?? [];
+  const aufsicht: any[] = g?.aufsicht ?? [];
 
   return (
     <main className="zvk-page">
       <Crumbs items={[{ label: 'Start', href: '/' }, { label: 'Über die ZVK' }]} />
       <PageHero
-        kicker="Wer wir sind"
-        title="Für das Handwerk. Aus dem Handwerk. Seit 1970."
-        lede="Die Zusatzversorgungskasse des Steinmetz- und Steinbildhauerhandwerks VVaG ist ein non-profit Versicherungsverein auf Gegenseitigkeit — tarifvertraglich verankert und BaFin-beaufsichtigt."
+        kicker={hero.kicker ?? 'Wer wir sind'}
+        title={hero.title ?? 'Für das Handwerk. Aus dem Handwerk. Seit 1970.'}
+        lede={hero.lede ?? ''}
       />
 
       <section className="zvk-section-sm">
         <div className="zvk-container" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48 }}>
           <div>
             <span className="zvk-kicker">Auftrag & Geschichte</span>
-            <h2 className="zvk-stitle" style={{ marginTop: 12 }}>Ein Auftrag, den wir uns nicht selbst gegeben haben.</h2>
-            <p style={{ marginTop: 18, color: 'var(--zvk-schiefer-800)' }}>
-              1970 von den Tarifparteien des Steinmetzhandwerks gegründet — damit Handwerker im Ruhestand
-              mehr haben als die gesetzliche Rente. Wir sind keine private Versicherung, sondern eine
-              branchenweite Gemeinschaftslösung.
-            </p>
+            <h2 className="zvk-stitle" style={{ marginTop: 12 }}>{history.title ?? 'Ein Auftrag, den wir uns nicht selbst gegeben haben.'}</h2>
+            <p style={{ marginTop: 18, color: 'var(--zvk-schiefer-800)' }}>{history.text ?? ''}</p>
           </div>
           <div className="timeline">
-            {[
-              { y: '1970', t: 'Gründung durch Tarifvertrag' },
-              { y: '1988', t: 'Pflichtmitgliedschaft aller Steinmetzbetriebe' },
-              { y: '2015', t: 'BaFin-Aufsicht als VVaG' },
-              { y: '2023', t: 'Einführung ZukunftStein' },
-              { y: '2026', t: 'Rebranding & neuer digitaler Service' },
-            ].map((x, i) => (
+            {timeline.map((x: any, i: number) => (
               <div className="timeline__item" key={i}>
                 <div className="timeline__y">{x.y}</div>
                 <div className="timeline__t">{x.t}</div>
@@ -79,14 +79,7 @@ export default async function UeberUnsPage() {
           <span className="zvk-kicker">Aufsicht & Transparenz</span>
           <h2 className="zvk-stitle" style={{ marginTop: 12, marginBottom: 24 }}>Kontrolliert, öffentlich, nachvollziehbar.</h2>
           <div className="zvk-grid zvk-grid-3">
-            {[
-              { t: 'BaFin-Aufsicht', d: 'Als VVaG unterliegen wir der Aufsicht der Bundesanstalt für Finanzdienstleistungsaufsicht.' },
-              { t: 'Tarifparteien', d: 'Getragen von den Arbeitgeberverbänden und der IG BAU.' },
-              { t: 'Aufsichtsrat', d: 'Paritätisch besetzt — aus Arbeitgebern, Arbeitnehmern und Vorstand.' },
-              { t: 'Jahresabschluss', d: 'Öffentlich verfügbar. Letzter testierter Bericht 2024.' },
-              { t: 'AVB', d: 'Allgemeine Versicherungsbedingungen als PDF herunterladbar.' },
-              { t: 'Nachhaltigkeit', d: 'Kapitalanlagen nach ESG-Kriterien, jährlicher Bericht.' },
-            ].map((x, i) => (
+            {aufsicht.map((x: any, i: number) => (
               <div className="zvk-card" key={i} style={{ padding: 22 }}>
                 <div style={{ fontSize: 16, color: 'var(--zvk-tiefschwarz)', fontWeight: 500, marginBottom: 8 }}>{x.t}</div>
                 <div style={{ fontSize: 14, color: 'var(--zvk-schiefer-800)', lineHeight: 1.55 }}>{x.d}</div>

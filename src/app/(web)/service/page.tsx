@@ -1,27 +1,26 @@
 import Link from 'next/link';
 import { Crumbs, PageHero } from '@/components/PageParts';
+import { getGlobal } from '@/lib/globals';
 
-export default function ServiceHubPage() {
-  const tasks = [
-    { t: 'Lohnsumme melden', g: 'Betriebe', link: '/service/meldeportal' },
-    { t: 'Mitarbeiter anlegen', g: 'Betriebe', link: '/service/meldeportal' },
-    { t: 'Adresse ändern', g: 'Rentner', link: '/fuer-rentner#aenderungen' },
-    { t: 'Bankverbindung ändern', g: 'Rentner', link: '/fuer-rentner#aenderungen' },
-    { t: 'Bescheid anfordern', g: 'Rentner', link: '/service/kontakt' },
-    { t: 'Renteninformation verstehen', g: 'Versicherte', link: '/fuer-versicherte#renteninfo' },
-    { t: 'Beratung zu ZukunftStein', g: 'ZukunftStein', link: '/vorsorge/zukunftstein' },
-    { t: 'Rente beantragen', g: 'Versicherte', link: '/service/kontakt' },
-  ];
+export default async function ServiceHubPage() {
+  const g = await getGlobal('service');
+  const hero = g?.hero ?? {};
+  const tasks: any[] = g?.tasks ?? [];
+
   return (
     <main className="zvk-page">
       <Crumbs items={[{ label: 'Start', href: '/' }, { label: 'Service' }]} />
-      <PageHero kicker="Service-Hub" title="Was möchten Sie tun?" lede="Ein einziger Ort für alle transaktionalen Dinge — sortiert nach Aufgaben, nicht nach Abteilung." />
+      <PageHero
+        kicker={hero.kicker ?? 'Service-Hub'}
+        title={hero.title ?? 'Was möchten Sie tun?'}
+        lede={hero.lede ?? ''}
+      />
       <section className="zvk-section-sm">
         <div className="zvk-container">
           <span className="zvk-kicker">Aufgaben</span>
           <h2 className="zvk-stitle" style={{ marginTop: 12, marginBottom: 24 }}>Direkte Wege.</h2>
           <div className="zvk-grid zvk-grid-4">
-            {tasks.map((t, i) => (
+            {tasks.map((t: any, i: number) => (
               <Link href={t.link} key={i} className="zvk-card zvk-card--link" style={{ padding: 20, minHeight: 130, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <span className="zvk-tag">{t.g}</span>
                 <div style={{ fontSize: 17, color: 'var(--zvk-tiefschwarz)', fontWeight: 500, marginTop: 12 }}>{t.t}</div>

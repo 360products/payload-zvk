@@ -13,6 +13,19 @@ import Partners from './collections/partners';
 import FAQ from './collections/faq';
 import Settings from './collections/settings';
 
+import HomeGlobal from './globals/home';
+import BetriebeGlobal from './globals/betriebe';
+import VersicherteGlobal from './globals/versicherte';
+import RentnerGlobal from './globals/rentner';
+import PflichtbeihilfeGlobal from './globals/pflichtbeihilfe';
+import ZukunftsteinGlobal from './globals/zukunftstein';
+import VergleichGlobal from './globals/vergleich';
+import UeberUnsGlobal from './globals/ueber-uns';
+import ServiceGlobal from './globals/service';
+import MeldeportalGlobal from './globals/meldeportal';
+import DownloadsGlobal from './globals/downloads';
+import KontaktGlobal from './globals/kontakt';
+
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
@@ -24,6 +37,11 @@ export default buildConfig({
     },
   },
   collections: [Users, Pages, News, Team, Partners, FAQ, Settings],
+  globals: [
+    HomeGlobal, BetriebeGlobal, VersicherteGlobal, RentnerGlobal,
+    PflichtbeihilfeGlobal, ZukunftsteinGlobal, VergleichGlobal, UeberUnsGlobal,
+    ServiceGlobal, MeldeportalGlobal, DownloadsGlobal, KontaktGlobal,
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || 'dev-secret-change-me',
   typescript: {

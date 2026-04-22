@@ -1,20 +1,20 @@
 import Link from 'next/link';
 import { Crumbs, PageHero } from '@/components/PageParts';
+import { getGlobal } from '@/lib/globals';
 
-export default function VergleichPage() {
-  const rows = [
-    ['Pflicht oder freiwillig?', 'Pflicht (tarifvertraglich)', 'Freiwillig'],
-    ['Wer zahlt?', 'Arbeitgeber', 'Arbeitnehmer (Bruttoumwandlung)'],
-    ['Für Arbeitnehmer kostet', '0 €', '~ 62 % vom Bruttobetrag netto'],
-    ['Zusätzliche Rente', 'Bis 116 €/Monat Vollrente', 'Abhängig vom Einzahlungsbetrag'],
-    ['Abschluss nötig', 'Nein — automatisch', 'Ja, über den Betrieb'],
-    ['Vertriebskosten', 'Keine', 'Keine'],
-    ['Aufsicht', 'BaFin', 'BaFin'],
-  ];
+export default async function VergleichPage() {
+  const g = await getGlobal('vergleich');
+  const hero = g?.hero ?? {};
+  const rows: any[] = g?.rows ?? [];
+
   return (
     <main className="zvk-page">
       <Crumbs items={[{ label: 'Start', href: '/' }, { label: 'Vorsorge', href: '/vorsorge/pflichtbeihilfe' }, { label: 'Vergleich' }]} />
-      <PageHero kicker="Vorsorge · Vergleich" title="Pflichtbeihilfe & ZukunftStein — im Vergleich." lede="Beides ist ZVK. Beides ist non-profit. Aber eben nicht dasselbe — hier die wichtigsten Unterschiede nebeneinander." />
+      <PageHero
+        kicker={hero.kicker ?? 'Vorsorge · Vergleich'}
+        title={hero.title ?? 'Pflichtbeihilfe & ZukunftStein — im Vergleich.'}
+        lede={hero.lede ?? ''}
+      />
       <section className="zvk-section-sm">
         <div className="zvk-container">
           <table className="compare">
@@ -22,11 +22,11 @@ export default function VergleichPage() {
               <tr><th></th><th>Pflichtbeihilfe</th><th>ZukunftStein</th></tr>
             </thead>
             <tbody>
-              {rows.map((r, i) => (
+              {rows.map((r: any, i: number) => (
                 <tr key={i}>
-                  <td className="compare__k">{r[0]}</td>
-                  <td>{r[1]}</td>
-                  <td>{r[2]}</td>
+                  <td className="compare__k">{r.key}</td>
+                  <td>{r.pflicht}</td>
+                  <td>{r.zukunft}</td>
                 </tr>
               ))}
             </tbody>
