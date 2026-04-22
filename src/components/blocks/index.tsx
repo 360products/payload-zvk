@@ -23,7 +23,7 @@ function TextBlockRenderer({ kicker, title, body, columns }: any) {
           {title && <h2 className="zvk-stitle" style={{ marginTop: 12, marginBottom: 20 }}>{title}</h2>}
           {body && (
             <div style={{ color: 'var(--zvk-schiefer-800)', lineHeight: 1.7 }}>
-              <RichText content={body} />
+              <RichText data={body} />
             </div>
           )}
         </div>
