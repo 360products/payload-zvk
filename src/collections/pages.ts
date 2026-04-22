@@ -6,6 +6,14 @@ import { StepsBlock } from '@/blocks/steps';
 import { ContactBlock } from '@/blocks/contact';
 import { DownloadsBlock } from '@/blocks/downloads';
 
+function slugify(text: string): string {
+  return (text || '')
+    .toLowerCase()
+    .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
+    .replace(/[^a-z0-9/]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 const Pages: CollectionConfig = {
   slug: 'pages',
   admin: {
@@ -14,6 +22,19 @@ const Pages: CollectionConfig = {
     description: 'Erstellen Sie hier neue Seiten. Sie sind sofort unter /[slug] erreichbar.',
   },
   access: { read: () => true },
+  hooks: {
+    beforeValidate: [
+      ({ data }) => {
+        if (!data) return data;
+        if (!data.slug && data.title) {
+          data.slug = slugify(data.title);
+        } else if (data.slug) {
+          data.slug = slugify(data.slug);
+        }
+        return data;
+      },
+    ],
+  },
   fields: [
     {
       type: 'row',
@@ -21,12 +42,16 @@ const Pages: CollectionConfig = {
         { name: 'title', label: 'Seitentitel', type: 'text', required: true },
         {
           name: 'slug',
-          label: 'URL-Pfad (z.B. foerderung-2026)',
+          label: 'URL-Pfad',
           type: 'text',
           required: true,
           unique: true,
           index: true,
-          admin: { description: 'Nur Kleinbuchstaben, Zahlen und Bindestriche. Erscheint unter /[slug].' },
+          admin: {
+            components: {
+              Field: '@/components/admin/SlugField',
+            },
+          },
         },
       ],
     },
